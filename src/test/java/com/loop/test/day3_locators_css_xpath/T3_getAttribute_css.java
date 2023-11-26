@@ -15,6 +15,7 @@ public class T3_getAttribute_css {
         driver.manage().window().maximize();
 
         WebElement logo = driver.findElement(By.cssSelector("img[src='/img/logo.d7557277.svg']"));
+        //By.cssSelector("input[name = 'login']"))
         String docuport = logo.getAttribute("alt");
         System.out.println(docuport);
         System.out.println((docuport.equalsIgnoreCase(DocuportConstants.LOGO_DOCUPORT))? "TEST PASSED" : "TEST FAILED");
