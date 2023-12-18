@@ -5,40 +5,36 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertTrue;
 
 public class Locators {
-    public static void main(String[] args) throws InterruptedException {
+    @Test
+    public void method() throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
 
-        WebDriver driver = WebDriverManager.chromedriver().create();
-        driver.get("https://www.google.com/");
-
-        driver.manage().window().maximize();
+        driver.get("https://www.google.com");
 
         WebElement searchBoxWithID = driver.findElement(By.id("APjFqb"));
         WebElement searchBoxWithName = driver.findElement(By.name("q"));
 
-        WebElement aboutLink = driver.findElement(By.linkText("Google Haqqında"));
+        WebElement haqqindaLink = driver.findElement(By.linkText("Google Haqqında"));
+        haqqindaLink.click();
+        driver.navigate().back();
 
-        searchBoxWithID.sendKeys("LoopCamp shupel academy");
-
+        searchBoxWithName.sendKeys("Ujuju");
         searchBoxWithID.clear();
-        searchBoxWithID.sendKeys("Loop academy" + Keys.ENTER);
+        String textToSearch = "Loop Academy";
+        searchBoxWithID.sendKeys(textToSearch, Keys.ENTER);
 
-        //searchBoxWithID.submit();
+        assertTrue(driver.getTitle().contains(textToSearch));
 
-        System.out.println(driver.getCurrentUrl().contains("Loop")? "Actual URL contains \"LOOP\" in it -- PASSED" : "Current URL does not " +
-                    "match -- FAILED");
+        Thread.sleep(2000);
 
-        System.out.println(driver.getTitle().contains("Loop academy - Google'da axtarış")? "Actual Title contains \"LOOP\" in it -- PASSED" :
-                "Current Title does not " +
-                "match -- FAILED");
-
-
-        Thread.sleep(13000);
-        //driver.quit();
-
-
-
-
+        //System.out.println(driver.findElement(By.tagName("title")).getText());
+        driver.quit();
     }
 }

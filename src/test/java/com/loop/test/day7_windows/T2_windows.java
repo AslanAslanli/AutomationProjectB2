@@ -10,13 +10,15 @@ import java.util.Set;
 public class T2_windows extends TestBase {
 
     @Test
-    public void windowHandleTest() {
+    public void windowHandleTest() throws InterruptedException {
         driver.get("https://www.amazon.com");
         ((JavascriptExecutor) driver).executeScript("window.open('http://google.com','_blank');");
         ((JavascriptExecutor) driver).executeScript("window.open('http://etsy.com','_blank');");
         ((JavascriptExecutor) driver).executeScript("window.open('http://facebook.com','_blank');");
 
-        BrowserUtil.switchWindowAndValidate(driver, "amazon.com", "amazon");
+        BrowserUtil.switchToWindow(driver, "fac2ebook");
+        Thread.sleep(6000);
+        //BrowserUtil.switchWindowAndValidate(driver, "amazon.com", "amazon");
 //        Set<String> windowHandles = driver.getWindowHandles();
 //
 //        for (String eachWindow : windowHandles) {

@@ -22,6 +22,7 @@ public class BrowserUtil {
         expectedTitle = expectedTitle.toLowerCase();
         expectedUrl = expectedUrl.toLowerCase();
         Set<String> windowHandles = driver.getWindowHandles();
+
         for (String eachWindow : windowHandles) {
             driver.switchTo().window(eachWindow);
             if (driver.getCurrentUrl().toLowerCase().contains(expectedUrl)){
@@ -30,4 +31,23 @@ public class BrowserUtil {
         }
         assertTrue(driver.getTitle().toLowerCase().contains(expectedTitle));
     }
+
+    /**
+     * @param driver
+     */
+
+    public static void switchToWindow(WebDriver driver, String targetTitle){
+        String origin = driver.getWindowHandle();
+
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+
+            if (driver.getTitle().toLowerCase().contains(targetTitle))
+                break;
+        }
+
+        if (!driver.getTitle().contains(targetTitle))
+            driver.switchTo().window(origin);
+    }
+
 }
