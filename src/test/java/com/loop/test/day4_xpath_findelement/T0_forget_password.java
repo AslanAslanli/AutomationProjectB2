@@ -1,25 +1,33 @@
 package com.loop.test.day4_xpath_findelement;
 
-import com.loop.test.utilities.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.time.Duration;
 
 public class T0_forget_password {
     public static void main(String[] args) {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
 
-        WebDriver driver = WebDriverFactory.getDriver("chrome");
-        driver.get("https://beta.docuport.app/login");
+        driver.get("https://beta.docuport.app/");
 
-        driver.findElement(By.cssSelector("a[href='/reset-password']")).click();
+        //WebElement forgetPasswordLink = driver.findElement(By.linkText("Forgot password?"));
+        WebElement forgetPasswordLink = driver.findElement(By.xpath("//a[text()='Forgot password?']"));
+        WebElement forgetPasswordLink1 = driver.findElement(By.xpath("//a[.='Forgot password?']"));
 
-        WebElement forgetPasswordHeading = driver.findElement(By.cssSelector("div[class='login-layout__form']>h1"));
-        System.out.println("Forget Password Heading = " + forgetPasswordHeading);
-        System.out.println(forgetPasswordHeading.getAttribute("href"));
+        WebElement forgetPasswordLink2 = driver.findElement(By.xpath("//div[@class=\"text-right\"]"));
+        System.out.println("forgetPasswordLink2.getText() = " + forgetPasswordLink2.getText());
 
+        System.out.println(forgetPasswordLink.getAttribute("href"));
+        forgetPasswordLink.click();
 
+        WebElement forgetPasswordHeading = driver.findElement(By.cssSelector("div>h1"));
+        System.out.println(forgetPasswordHeading.getText());
 
-
+        driver.quit();
     }
 }

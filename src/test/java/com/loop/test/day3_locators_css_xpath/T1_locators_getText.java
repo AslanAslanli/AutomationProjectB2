@@ -3,33 +3,39 @@ package com.loop.test.day3_locators_css_xpath;
 import com.loop.test.utilities.DocuportConstants;
 import com.loop.test.utilities.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class T1_locators_getText {
-    public static void main(String[] args) {
+    @Test
+    public void method() throws InterruptedException {
         WebDriver driver = WebDriverFactory.getDriver("chrome");
-        driver.get("https://beta.docuport.app/login?redirect=%2F");
+        driver.get("https://beta.docuport.app/login");
 
-        driver.manage().window().maximize();
+        WebElement inputUsername = driver.findElement(By.id("input-14"));
+        inputUsername.sendKeys(DocuportConstants.USERNAME_CLIENT);
 
-        WebElement userName = driver.findElement(By.id("input-14"));
-        userName.sendKeys(DocuportConstants.USERNAME_CLIENT);
-
-        WebElement userPassword = driver.findElement(By.id("input-15"));
-        //userPassword.sendKeys(DocuportConstants.PASSWORD_CLIENT + Keys.ENTER);
-
+//        WebElement inputPassword = driver.findElement(By.id("input-15"));
+//        inputPassword.sendKeys(DocuportConstants.GENERIC_PASSWORD);
 
         WebElement loginButton = driver.findElement(By.className("v-btn__content"));
         loginButton.click();
 
-        WebElement errorMessageForEmptyPassword = driver.findElement(By.className("v-messages__message"));
-        String actualErrorMessage = errorMessageForEmptyPassword.getText();
+        WebElement errorMessage = driver.findElement(By.className("v-messages__message"));
+        String actualErrorMessage = errorMessage.getText();
+        assertEquals(actualErrorMessage, DocuportConstants.ERROR_MESSAGE_FOR_EMPTY_PASSWORD);
 
-        System.out.println(actualErrorMessage.equals(DocuportConstants.ERROR_MESSAGE_FOR_EMPTY_PASSWORD)? "TEST PASSED: Error message for missing " +
-                "password is CORRECT" : "TEST FAILED: Error message for missing password is IN_CORRECT");
+        Thread.sleep(3000);
+        driver.quit();
+
+
 
 
 

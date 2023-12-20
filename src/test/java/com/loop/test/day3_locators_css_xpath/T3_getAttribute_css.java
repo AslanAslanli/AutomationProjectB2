@@ -1,25 +1,33 @@
 package com.loop.test.day3_locators_css_xpath;
 
-import com.loop.test.utilities.DocuportConstants;
-import com.loop.test.utilities.LoopCampConstants;
-import com.loop.test.utilities.WebDriverFactory;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.safari.SafariDriver;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 public class T3_getAttribute_css {
-    public static void main(String[] args) {
+    @Test
+    public void method() throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
 
-        WebDriver driver = WebDriverFactory.getDriver("chrome");
-        driver.get("https://beta.docuport.app/login");
-        driver.manage().window().maximize();
+        driver.get("https://beta.docuport.app/");
+//        driver.manage().window().fullscreen();
+//        driver.navigate().back();
+//        driver.navigate().forward();
+//        driver.navigate().refresh();
 
-        WebElement logo = driver.findElement(By.cssSelector("img[src='/img/logo.d7557277.svg']"));
-        //By.cssSelector("input[name = 'login']"))
-        String docuport = logo.getAttribute("alt");
-        System.out.println(docuport);
-        System.out.println((docuport.equalsIgnoreCase(DocuportConstants.LOGO_DOCUPORT))? "TEST PASSED" : "TEST FAILED");
+        WebElement docuport = driver.findElement(By.cssSelector("a>img[alt='Docuport']"));
+        String valueOFAttribute = docuport.getAttribute("alt");
+        System.out.println(valueOFAttribute);
+        assertEquals(valueOFAttribute.trim(), "Docuport");
 
-
+        Thread.sleep(3000);
+        driver.quit();
     }
 }
